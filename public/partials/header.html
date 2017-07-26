@@ -7,12 +7,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+
             <a href="/" class="navbar-brand">Task Tracker</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <!-- <ul class="nav navbar-nav">
-        <li ng-class="{ active: isActive('/contact')}"><a href="/contact">Contact</a></li>
-      </ul> -->
+            <ul class="nav navbar-nav">
+                <li ng-class="{ active: isActive('/account')}"><a href="/account">Profile</a></li>
+                <li ng-class="{ active: isActive('#')}"><a href="#">Task</a></li>
+            </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="navbar-avatar dropdown-toggle">
@@ -27,9 +29,9 @@
             </ul>
             <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li ng-class="{ active: isActive('/')}"><a href="/">Log in</a></li>
-                <!-- <li ng-class="{ active: isActive('/signup')}"><a href="/signup">Sign up</a></li> -->
+                <li ng-class="{ active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
             </ul>
         </div>
 
-    </div>
+
 </nav>
