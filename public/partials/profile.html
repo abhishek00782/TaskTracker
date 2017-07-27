@@ -45,14 +45,34 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-4">
+                        <button type="submit" class="btn btn-success">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+
+            <form ng-submit="uploadFile()">
+                <div class="form-group">
                     <label class="col-sm-3">Profile Picture</label>
                     <div class="col-sm-4">
-                        <img ng-src="{{profile.gravatar}}" class="profile" width="100" height="100">
+                        <img ng-src="{{currentUser.picture}}" || "/images/profile-default-male.png" class="profile" width="100" height="100">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-4">
-                        <button type="submit" class="btn btn-success">Update Profile</button>
+                        <label class="custom-file">
+                            <input type="file" id="picture" name="picture" accept="image/*" file-model = "myFile">
+                            <span class="custom-file-control"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-4">
+                        <button type="submit" class="btn btn-success">Upload Picture</button>
                     </div>
                 </div>
             </form>
