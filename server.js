@@ -9,6 +9,16 @@ var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var request = require('request');
+var multer = require('multer');
+
+//Multer store and rename config
+var storage = multer.diskStorage({
+    destination: './uploads/',
+    filename: function(req, file, cb) {
+        cb(null, file.originalname.replace(path.extname(file.originalname), "") + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+var upload = multer({ storage: storage })
 
 // Load environment variables from .env file
 dotenv.load();
@@ -65,6 +75,8 @@ app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+app.post('/savedata', userController.ensureAuthenticated, upload.single('file'), userController.picturePost);
+
 
 app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);
