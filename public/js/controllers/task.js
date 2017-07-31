@@ -1,15 +1,14 @@
 angular.module('MyApp')
-    .controller('TaskCtrl', function($scope, $location, taskService, taskFactory, $window, $rootScope) {
+    .controller('TaskCtrl', function($scope, $location, taskService, taskFactory, $window, $rootScope, $auth) {
+        $scope.profile = $rootScope.currentUser;
         taskFactory.acquire($scope.currentUser)
             .then(function(response) {
-                taskService.taskData=response.data.task;
+                taskService.taskData = response.data.task;
                 $rootScope.task2 = response.data.task;
                 $window.localStorage.task = JSON.stringify(response.data.task);
                 $scope.messages = {
                     success: [response.data.msg]
                 };
-                console.log($scope.messages.success);
-                console.log($rootScope.task2);
             });
         $scope.task = taskService;
         $scope.search = '';
@@ -23,7 +22,23 @@ angular.module('MyApp')
         };
     });
 angular.module('MyApp')
-    .controller('TaskUpdateCtrl', function($scope, $location, taskService) {
+    .controller('TaskUpdateCtrl', function($scope, $location, taskService, taskFactory, $window, $rootScope, $auth) {
+        $scope.profile = $rootScope.currentUser;
+
+        console.log($rootScope.currentUser);
+        $scope.updateTask = function() {
+            taskFactory.updateTask($scope.task.selectedTask)
+                .then(function(response) {
+                    // taskService.taskData = response.data.task;
+                    // $rootScope.task2 = response.data.task;
+                    // $window.localStorage.task = JSON.stringify(response.data.task);
+                    $scope.messages = {
+                        success: [response.data.msg]
+                    };
+                    console.log($scope.messages.success);
+                    console.log(response.data.task);
+                });
+        }
         $scope.task = taskService;
         $location.path('/task/update');
     });
