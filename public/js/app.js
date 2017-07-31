@@ -58,12 +58,13 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
 
         function loginRequired($location, $auth) {
             if (!$auth.isAuthenticated()) {
-                $location.path('/login');
+                $location.path('/');
             }
         }
     })
     .run(function($rootScope, $window) {
         if ($window.localStorage.user) {
+            console.log($window.localStorage.user);
             $rootScope.currentUser = JSON.parse($window.localStorage.user);
         }
     });

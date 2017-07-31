@@ -234,25 +234,30 @@ exports.taskGet = function(req, res, next) {
                 .send({ msg: 'No tasks currently assigned to you' });
         }
     });
-    // Task.find({ }, function(err, task) {
-         
-    //     task = new Task({
-    //         subject: 'Logout Issues',
-    //         body: 'clients getting logged out',
-    //         assignedDate: Date.now()+(48*3600000),
-    //         deadlineDate: Date.now()+(72*3600000),
-    //         documentLink: '',
-    //         status: 'pending',
-    //         rating: 0,
-    //         priority: 4,
-    //         remarks: '',
-    //         members: ['597ec33f8d62a31ba8cb32a9']
-    //     });
-    //     task.save(function(err) {
-    //         res.send();
-    //     });
 };
 
+
+/**
+ * PUT /task/update
+ */
+exports.taskUpdatePut = function(req, res, next) {
+    console.log('req body', req.body);
+    Task.findById(req.body.id, function(err, task) {
+
+        task.rating = req.body.rating;
+        task.status = req.body.status;
+        task.remarks = req.body.remarks;
+        console.log('queried and updated task', task);
+        task.save(function(err) {
+            if (err) {
+                res.status(409)
+                    .send({ msg: 'MongoDB error' });
+            } else {
+                res.send({ task: task, msg: 'Your profile information has been updated.' });
+            }
+        });
+    });
+};
 
 
 /**
