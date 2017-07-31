@@ -33,7 +33,7 @@
 		                    <div class="col-md-12" >
                                 <table class="table table-bordered" >
                                 <tr >
-					            <th ></th >
+					            <th >S.No.</th >
 					            <th >Subject
                                     <span ng-click="order = 'subject'"
 								      class="glyphicon glyphicon-menu-up" ></span >
@@ -62,7 +62,7 @@
 				    ng-click="task.selectedTask = tas" templateUrl="/task/update" >
 					<td >{{ $index }}</td >
 					<td >{{ tas.subject }}</td >
-					<td >{{ tas.deadline }}</td >
+					<td >{{ tas.deadlineDate }}</td >
                     <td >{{ tas.status }}</td >
                     <td ><a href="/task/update"><button class="btn btn-md-2 btn-warning" templateUrl="/task/update" >Update</button></a></td >
                         

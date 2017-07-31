@@ -234,7 +234,23 @@ exports.taskGet = function(req, res, next) {
                 .send({ msg: 'No tasks currently assigned to you' });
         }
     });
-
+    // Task.find({ }, function(err, task) {
+         
+    //     task = new Task({
+    //         subject: 'Logout Issues',
+    //         body: 'clients getting logged out',
+    //         assignedDate: Date.now()+(48*3600000),
+    //         deadlineDate: Date.now()+(72*3600000),
+    //         documentLink: '',
+    //         status: 'pending',
+    //         rating: 0,
+    //         priority: 4,
+    //         remarks: '',
+    //         members: ['597ec33f8d62a31ba8cb32a9']
+    //     });
+    //     task.save(function(err) {
+    //         res.send();
+    //     });
 };
 
 
