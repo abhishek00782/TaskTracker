@@ -58,7 +58,7 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
 
         function loginRequired($location, $auth) {
             if (!$auth.isAuthenticated()) {
-                $location.path('/');
+                $location.path('/login');
             }
         }
     })

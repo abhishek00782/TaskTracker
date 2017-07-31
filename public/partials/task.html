@@ -1,25 +1,27 @@
-<div class=Container-fluid>
-    <div class="Box1">
-        <div style="margin-top:100px">
-            <div style="margin-top:100px">
-                <ul style="list-style: none;">
-                    <li>
-                        <a href="/task">
-                            <button templateUrl="/task" class="btn btn-sm btn-primary btn-block custom1 active">Task</button></a>
-                    </li>
-                </ul>
+<div class=Container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="Box1">
+                <div style="margin-top:100px">
+                    <div style="margin-top:100px">
+                        <ul style="list-style: none;">
+                            <li>
+                                <a href="/task">
+                                    <button templateUrl="/task" class="btn btn-sm btn-primary btn-block custom1 active">Tasks</button></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="Box2">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="task">
-                        <div class="col-md-12">
-                            <h1 class="content-title" style="color:black">Task List</h1>
-                            <form class="form-inline well well-sm">
-                                <span class="glyphicon glyphicon-search"></span >
+            <div class="Box2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="task">
+                                <div class="col-md-12">
+                                    <h1 class="content-title" style="color:black">Task List</h1>
+                                    <form class="form-inline well well-sm">
+                                        <span class="glyphicon glyphicon-search"></span >
                                     <div class="form-group" >
 				                        <input type="text"
 							            class="form-control"
@@ -57,7 +59,7 @@
 
 				<tr ng-repeat="tas in filteredTask=(task.taskData | filter:sensitiveSearch | orderBy:order)"
 				    ng-style="{
-							 'background-color': tas.subject == task.selectedTask.subject ? 'lightblue' : ''
+							 'background-color': tas.subject == task.selectedTask.subject ? 'white' : ''
 						}"
 				    ng-click="task.selectedTask = tas" templateUrl="/task/update" >
 					<td >{{ $index }}</td >
@@ -79,15 +81,7 @@
 			</table >
 
 		</div >
-                        <!-- <div ng-repeat= "tas in task.taskData | filter:search" >
-                         <strong>
-                        <pre  ng-style="{
-							 'background-color': tas.subject == task.selectedTask.subject ? 'lightblue' : ''
-						}"
-						    ng-click="task.selectedTask = tas" templateUrl="/task"> {{$index}}.  {{tas.subject}}
-                            <a href="#/task">update</a>
-                        </pre></strong>
-                     </div> -->
+                      
                      
                             
                      
@@ -98,3 +92,4 @@
            
        </div>
     </div>
+            </div></div>
