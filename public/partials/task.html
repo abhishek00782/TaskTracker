@@ -1,0 +1,100 @@
+<div class=Container-fluid>
+    <div class="Box1">
+        <div style="margin-top:100px">
+            <div style="margin-top:100px">
+                <ul style="list-style: none;">
+                    <li>
+                        <a href="/task">
+                            <button templateUrl="/task" class="btn btn-sm btn-primary btn-block custom1 active">Task</button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Box2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="task">
+                        <div class="col-md-12">
+                            <h1 class="content-title" style="color:black">Task List</h1>
+                            <form class="form-inline well well-sm">
+                                <span class="glyphicon glyphicon-search"></span >
+                                    <div class="form-group" >
+				                        <input type="text"
+							            class="form-control"
+							            id="name"
+							            ng-model="search"
+							            placeholder="Search subject or status..."
+									    />
+						            </div >
+                            </form >
+                        <div class="row" >
+		                    <div class="col-md-12" >
+                                <table class="table table-bordered" >
+                                <tr >
+					            <th ></th >
+					            <th >Subject
+                                    <span ng-click="order = 'subject'"
+								      class="glyphicon glyphicon-menu-up" ></span >
+								    <span ng-click="order = '-subject'"
+								      class="glyphicon glyphicon-menu-down" ></span >
+                                </th >
+					            <th >Deadline
+                                    <span ng-click="order = 'deadline'"
+								      class="glyphicon glyphicon-menu-up" ></span >
+								    <span ng-click="order = '-deadline'"
+								      class="glyphicon glyphicon-menu-down" ></span >
+                                </th >
+                                <th >Status
+                                    <span ng-click="order = 'status'"
+								      class="glyphicon glyphicon-menu-up" ></span >
+								<span ng-click="order = '-status'"
+								      class="glyphicon glyphicon-menu-down" ></span >
+                                </th >
+                                <th> Update </th>              
+				                </tr >
+
+				<tr ng-repeat="tas in filteredTask=(task.taskData | filter:sensitiveSearch | orderBy:order)"
+				    ng-style="{
+							 'background-color': tas.subject == task.selectedTask.subject ? 'lightblue' : ''
+						}"
+				    ng-click="task.selectedTask = tas" templateUrl="/task/update" >
+					<td >{{ $index }}</td >
+					<td >{{ tas.subject }}</td >
+					<td >{{ tas.deadline }}</td >
+                    <td >{{ tas.status }}</td >
+                    <td ><a href="/task/update"><button class="btn btn-md-2 btn-warning" templateUrl="/task/update" >Update</button></a></td >
+                        
+				</tr >
+				 <tr ng-show="filteredTask.length == 0">
+					<td colspan="4">
+						<div class="alert alert-info">
+							<p class="text-center">No results found for search term '{{ search }}'</p>
+						</div>
+					</td>
+				</tr> 
+
+
+			</table >
+
+		</div >
+                        <!-- <div ng-repeat= "tas in task.taskData | filter:search" >
+                         <strong>
+                        <pre  ng-style="{
+							 'background-color': tas.subject == task.selectedTask.subject ? 'lightblue' : ''
+						}"
+						    ng-click="task.selectedTask = tas" templateUrl="/task"> {{$index}}.  {{tas.subject}}
+                            <a href="#/task">update</a>
+                        </pre></strong>
+                     </div> -->
+                     
+                            
+                     
+                 </div>
+             </div>
+         </div>
+           </div>
+           
+       </div>
+    </div>

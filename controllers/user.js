@@ -7,6 +7,7 @@ var request = require('request');
 var qs = require('querystring');
 var User = require('../models/User');
 var fs = require('fs');
+var Task = require('../models/Task');
 
 function generateToken(user) {
     var payload = {
@@ -216,6 +217,27 @@ exports.accountDelete = function(req, res, next) {
         res.send({ msg: 'Your account has been permanently deleted.' });
     });
 };
+
+
+
+/**
+ * GET /task
+ */
+exports.taskGet = function(req, res, next) {
+    Task.find({ members: { $elemMatch: { $eq: req.user.id } } }, function(err, task) {
+        if (task) {
+            console.log(task);
+            return res.status(200)
+                .send({ msg: 'tasks present', task: task });
+        } else {
+            return res.status(200)
+                .send({ msg: 'No tasks currently assigned to you' });
+        }
+    });
+
+};
+
+
 
 /**
  * GET /unlink/:provider

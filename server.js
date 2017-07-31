@@ -76,6 +76,8 @@ app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.post('/savedata', userController.ensureAuthenticated, upload.single('file'), userController.picturePost);
+app.get('/task', userController.ensureAuthenticated, userController.taskGet);
+
 
 
 app.get('*', function(req, res) {
