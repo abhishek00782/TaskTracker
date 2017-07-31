@@ -35,10 +35,12 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
             .when('/task', {
                 templateUrl: 'partials/task.html',
                 controller: 'TaskCtrl',
+                resolve: { loginRequired: loginRequired }
             })
             .when('/task/update', {
                 templateUrl: 'partials/update.html',
                 controller: 'TaskUpdateCtrl',
+                resolve: { loginRequired: loginRequired }
 
             })
             .otherwise({
