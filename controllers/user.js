@@ -27,12 +27,15 @@ function generateToken(user) {
  */
 exports.ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
+
         next();
     } else {
+
         res.status(401)
             .send({ msg: 'Unauthorized' });
     }
 };
+
 /**
  * POST /login
  * Sign in with email and password
@@ -221,14 +224,14 @@ exports.accountDelete = function(req, res, next) {
 
 
 /**
- * GET /task
+ * POST /task
  */
 exports.taskGet = function(req, res, next) {
+    console.log('req data', req);
     Task.find({ members: { $elemMatch: { $eq: req.user.id } } }, function(err, task) {
         if (task) {
-            console.log(task);
             return res.status(200)
-                .send({ msg: 'tasks present', task: task });
+                .send({ msg: 'tasks present', task: task, user: req.user });
         } else {
             return res.status(200)
                 .send({ msg: 'No tasks currently assigned to you' });
@@ -241,19 +244,18 @@ exports.taskGet = function(req, res, next) {
  * PUT /task/update
  */
 exports.taskUpdatePut = function(req, res, next) {
-    console.log('req body', req.body);
     Task.findById(req.body.id, function(err, task) {
 
         task.rating = req.body.rating;
         task.status = req.body.status;
         task.remarks = req.body.remarks;
-        console.log('queried and updated task', task);
+
         task.save(function(err) {
             if (err) {
                 res.status(409)
                     .send({ msg: 'MongoDB error' });
             } else {
-                res.send({ task: task, msg: 'Your profile information has been updated.' });
+                res.send({ task: task, msg: 'Your task details has been updated.' });
             }
         });
     });
