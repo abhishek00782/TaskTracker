@@ -79,11 +79,16 @@
 <div class="form-group row" >
 	<label class="col-sm-2 col-sm-offset-1 control-label" >Ratings</label >
 	<div class="col-sm-3" >
-		<input type="text"
-		       name="ratings"
-		       class="form-control"
-		       ng-model="task.selectedTask.rating"
-                />
+		<select name="status"
+		        class="form-control"
+		        ng-model="task.selectedTask.rating"
+		        id="" >
+			<option value="1" >1</option >
+            <option value="2" >2</option >
+			<option value="3" >3</option >
+			<option value="4" >4</option >
+			<option value="5" >5</option >
+		</select >
         
 	</div >
         <label class="col-sm-1">/5</label >

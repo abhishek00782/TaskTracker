@@ -17,6 +17,9 @@ angular.module('MyApp')
             },
             updateTask: function(data) {
                 return $http.put('/task/update', data);
+            },
+            createTask: function(data) {
+                return $http.post('/task/create', data);
             }
         };
     });

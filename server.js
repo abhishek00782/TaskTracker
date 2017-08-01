@@ -68,7 +68,7 @@ app.use(function(req, res, next) {
     }
 });
 //-----------------------------------------------
-    app.use(function(req, res, next) {
+app.use(function(req, res, next) {
     req.isAuthenticated = function() {
         var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
         try {
@@ -102,6 +102,7 @@ app.post('/task', userController.ensureAuthenticated, userController.taskGet);
 app.put('/task/update', userController.ensureAuthenticated, userController.taskUpdatePut);
 app.post('/adminlogin', userController.adminloginPost);
 app.post('/adminsignup', userController.adminsignupPost);
+app.post('/task/create', userController.ensureAuthenticated, userController.taskCreatePut);
 
 app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);

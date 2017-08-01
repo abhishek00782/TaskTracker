@@ -2,14 +2,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="Box1">
-                <div style="margin-top:100px">
-                    <div style="margin-top:100px">
-                        <ul style="list-style: none;">
-                            <li>
-                                <a href="/task">
-                                    <button templateUrl="/task" class="btn btn-sm btn-primary btn-block custom1 active">Tasks</button></a>
-                            </li>
-                        </ul>
+                <div>
+                    <div>
                     </div>
                 </div>
             </div>
@@ -19,21 +13,26 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="task">
                                 <div class="col-md-12">
-                                    <h1 class="content-title" style="color:black">Task List</h1>
+                                    <div class="col-md-offset-5">
+                                        <h1 class="content-title" style="color:black"><strong><kbd>Tasks</kbd></strong></h1>
+                                    </div>
                                     <form class="form-inline well well-sm">
-                                        <span class="glyphicon glyphicon-search"></span >
+                                        <span class=""></span >
                                     <div class="form-group" >
-				                        <input type="text"
-							            class="form-control"
+				                        <input type="search"
+							            
 							            id="name"
 							            ng-model="search"
-							            placeholder="Search subject or status..."
+							            placeholder="Search"
 									    />
-						            </div >
+                                    </div >
+                                    <button class="btn btn-primary pull-right"
+						             ng-click="showCreateModal()" >Create
+						</button >
                             </form >
                         <div class="row" >
 		                    <div class="col-md-12" >
-                                <table class="table table-bordered" >
+                                <table class="table table-bordered table-hover" >
                                 <tr >
 					            <th >S.No.</th >
 					            <th >Subject
@@ -62,11 +61,11 @@
 							 'background-color': tas.subject == task.selectedTask.subject ? 'white' : ''
 						}"
 				    ng-click="task.selectedTask = tas" templateUrl="/task/update" >
-					<td >{{ $index }}</td >
+					<td >{{ $index+1 }}</td >
 					<td >{{ tas.subject }}</td >
-					<td >{{ tas.deadlineDate }}</td >
+					<td >{{ tas.deadlineDate | date : 'mediumDate'}}</td >
                     <td >{{ tas.status }}</td >
-                    <td ><a href="/task/update"><button class="btn btn-md-2 btn-warning" templateUrl="/task/update" >Update</button></a></td >
+                    <td ><button class="btn btn-md-2 btn-warning"  ng-click="showUpdateModal()" >Update</button></a></td >
                         
 				</tr >
 				 <tr ng-show="filteredTask.length == 0">

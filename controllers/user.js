@@ -22,6 +22,7 @@ function generateToken(user) {
     };
     return jwt.sign(payload, process.env.TOKEN_SECRET);
 }
+
 function generateToken(admin) {
     var payload = {
         iss: 'my.domain.com',
@@ -88,14 +89,14 @@ exports.loginPost = function(req, res, next) {
     });
 };
 //----------------------------------------------------------------
- exports.ensureAuthenticated = function(req, res, next) {
-      if (req.isAuthenticated()) {
-          next();
-      } else {
-          res.status(401)
-              .send({ msg: 'Unauthorized' });
-      }
-  };
+exports.ensureAuthenticated = function(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.status(401)
+            .send({ msg: 'Unauthorized' });
+    }
+};
 /**
  * POST /login
  * Sign in with email and password
@@ -131,7 +132,7 @@ exports.adminloginPost = function(req, res, next) {
     });
 };
 //-----------------------------------------------------------
-    exports.adminsignupPost = function(req, res, next) {
+exports.adminsignupPost = function(req, res, next) {
     req.assert('username', 'Username cannot be blank')
         .notEmpty();
     req.assert('email', 'Email is not valid')
@@ -318,7 +319,7 @@ exports.accountDelete = function(req, res, next) {
  * POST /task
  */
 exports.taskGet = function(req, res, next) {
-    console.log('req data', req);
+    console.log('getTask called');
     Task.find({ members: { $elemMatch: { $eq: req.user.id } } }, function(err, task) {
         if (task) {
             return res.status(200)
@@ -326,6 +327,48 @@ exports.taskGet = function(req, res, next) {
         } else {
             return res.status(200)
                 .send({ msg: 'No tasks currently assigned to you' });
+        }
+    });
+};
+
+
+
+/**
+ * POST /task
+ */
+exports.taskCreatePut = function(req, res, next) {
+    console.log('req data', req.body);
+    req.assert('subject', 'subject cannot be blank')
+        .notEmpty();
+    req.assert('body', 'body cannot be blank')
+        .notEmpty();
+    req.assert('deadlineDate', 'please specify a deadline')
+        .notEmpty();
+
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400)
+            .send(errors);
+    }
+
+    var task = new Task({
+        subject: req.body.subject,
+        body: req.body.body,
+        deadlineDate: Date.now() + (req.body.deadlineDate * 24 * 60 * 60 * 1000),
+        priority: req.body.priority,
+        status: req.body.status,
+        remarks: req.body.remarks,
+        members: req.user.id,
+        assignedDate: Date.now(),
+        documentLink: req.body.documentLink
+    });
+    task.save(function(err) {
+        if (err) {
+            res.send({ msg: 'error ins saving task' });
+        } else {
+            res.send({ msg: 'task saved', task: task });
         }
     });
 };
@@ -340,6 +383,7 @@ exports.taskUpdatePut = function(req, res, next) {
         task.rating = req.body.rating;
         task.status = req.body.status;
         task.remarks = req.body.remarks;
+        task.documentLink = req.body.documentLink;
 
         task.save(function(err) {
             if (err) {
