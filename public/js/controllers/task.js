@@ -35,7 +35,15 @@ app.controller('TaskCtrl', function($scope, $location, $modal, taskService, task
         taskFactory.createTask($scope.task.selectedTask)
             .then(function() {
                 $scope.createModal.hide();
-                taskFactory.getTasks($scope.profile);
+                taskFactory.getTasks($scope.profile)
+                    .then(function(response) {
+                        taskService.taskData = response.data.task;
+
+
+                        $scope.messages = {
+                            success: [response.data.msg]
+                        };
+                    });
             })
 
 
@@ -58,26 +66,24 @@ app.controller('TaskCtrl', function($scope, $location, $modal, taskService, task
                 $scope.messages = {
                     success: [response.data.msg]
                 };
-                console.log($scope.messages.success);
-                console.log(response.data.task);
                 $scope.updateModal.hide();
             });
     }
 });
 
-app.controller('TaskUpdateCtrl', function($scope, $location, taskService, taskFactory, $window, $rootScope, $auth) {
-    $scope.profile = $rootScope.currentUser;
-    $scope.updateTask = function() {
-        taskFactory.updateTask($scope.task.selectedTask)
-            .then(function(response) {
+// app.controller('TaskUpdateCtrl', function($scope, $location, taskService, taskFactory, $window, $rootScope, $auth) {
+//     $scope.profile = $rootScope.currentUser;
+//     $scope.updateTask = function() {
+//         taskFactory.updateTask($scope.task.selectedTask)
+//             .then(function(response) {
 
-                $scope.messages = {
-                    success: [response.data.msg]
-                };
-                console.log($scope.messages.success);
-                console.log(response.data.task);
-            });
-    }
-    $scope.task = taskService;
-    $location.path('/task/update');
-});
+//                 $scope.messages = {
+//                     success: [response.data.msg]
+//                 };
+//                 console.log($scope.messages.success);
+//                 console.log(response.data.task);
+//             });
+//     }
+//     $scope.task = taskService;
+//     $location.path('/task/update');
+// });

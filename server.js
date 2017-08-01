@@ -103,6 +103,8 @@ app.put('/task/update', userController.ensureAuthenticated, userController.taskU
 app.post('/adminlogin', userController.adminloginPost);
 app.post('/adminsignup', userController.adminsignupPost);
 app.post('/task/create', userController.ensureAuthenticated, userController.taskCreatePut);
+app.post('/stats', userController.ensureAuthenticated, userController.statsGet);
+
 
 app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);

@@ -1,23 +1,16 @@
-<div class=Container>
+<div class="Container xyz">
     <div class="row">
-        <div class="col-md-12">
-            <div class="Box1">
-                <div>
-                    <div>
-                    </div>
-                </div>
-            </div>
-            <div class="Box2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="task">
-                                <div class="col-md-12">
-                                    <div class="col-md-offset-5">
-                                        <h1 class="content-title" style="color:black"><strong><kbd>Tasks</kbd></strong></h1>
-                                    </div>
-                                    <form class="form-inline well well-sm">
-                                        <span class=""></span >
+        <div class="Box1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="task">
+                            <div class="col-md-12">
+                                <div class="col-md-offset-5">
+                                    <h3 class="content-title"><strong><kbd>Tasks</kbd></strong></h3>
+                                </div>
+                                <form class="form-inline well well-sm">
+                                    <span class=""></span >
                                     <div class="form-group" >
 				                        <input type="search"
 							            
@@ -34,26 +27,41 @@
 		                    <div class="col-md-12" >
                                 <table class="table table-bordered table-hover" >
                                 <tr >
-					            <th >S.No.</th >
-					            <th >Subject
+					            <th class="col-1">S.No.</th >
+					            <th class="col-2">Subject
                                     <span ng-click="order = 'subject'"
 								      class="glyphicon glyphicon-menu-up" ></span >
 								    <span ng-click="order = '-subject'"
 								      class="glyphicon glyphicon-menu-down" ></span >
                                 </th >
-					            <th >Deadline
-                                    <span ng-click="order = 'deadline'"
+					            <th class="col-3">Deadline
+                                    <span ng-click="order = 'deadlineDate'"
 								      class="glyphicon glyphicon-menu-up" ></span >
-								    <span ng-click="order = '-deadline'"
+								    <span ng-click="order = '-deadlineDate'"
 								      class="glyphicon glyphicon-menu-down" ></span >
                                 </th >
-                                <th >Status
+                                <th class="col-4">Status
                                     <span ng-click="order = 'status'"
 								      class="glyphicon glyphicon-menu-up" ></span >
 								<span ng-click="order = '-status'"
 								      class="glyphicon glyphicon-menu-down" ></span >
                                 </th >
-                                <th> Update </th>              
+                                 <th class="col-5">Priority
+                                    <span ng-click="order = 'priority'"
+								      class="glyphicon glyphicon-menu-up" ></span >
+								<span ng-click="order = '-priority'"
+								      class="glyphicon glyphicon-menu-down" ></span >
+                                </th >
+                                <th class="col-6">Rating
+                                    <span ng-click="order = 'rating'"
+								      class="glyphicon glyphicon-menu-up" ></span >
+								<span ng-click="order = '-rating'"
+								      class="glyphicon glyphicon-menu-down" ></span >
+                                </th >
+                                <th class="col-7">Remarks
+                                    
+                                </th >
+                                <th class="col-8"> Update </th>              
 				                </tr >
 
 				<tr ng-repeat="tas in filteredTask=(task.taskData | filter:sensitiveSearch | orderBy:order)"
@@ -65,6 +73,9 @@
 					<td >{{ tas.subject }}</td >
 					<td >{{ tas.deadlineDate | date : 'mediumDate'}}</td >
                     <td >{{ tas.status }}</td >
+                    <td >{{ tas.priority }}</td >
+                    <td >{{ tas.rating }}</td >
+                    <td >{{ tas.remarks.substr(0,55)+'..' }}</td >
                     <td ><button class="btn btn-md-2 btn-warning"  ng-click="showUpdateModal()" >Update</button></a></td >
                         
 				</tr >
@@ -89,6 +100,6 @@
          </div>
            </div>
            
-       </div>
+
     </div>
             </div></div>

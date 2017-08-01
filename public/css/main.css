@@ -47,6 +47,11 @@ footer {
     max-width: 555px;
 }
 
+.xyz {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 
 /* Alerts
 /* ------------------------- */
@@ -347,18 +352,22 @@ textarea {
 }
 
 .table .col-1 {
-    width: 10%;
+    width: 5%;
 }
 
 .table .col-2 {
-    width: 30%;
+    width: 20%;
 }
 
 .table .col-3 {
-    width: 30%;
+    width: 10%;
 }
 
 .table .col-4 {
+    width: 10%;
+}
+
+.table .col-7 {
     width: 30%;
 }
 
