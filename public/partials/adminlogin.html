@@ -5,14 +5,14 @@
                 <div ng-repeat="error in messages.error">{{error.msg}}</div>
             </div>
             <form ng-submit="login()">
-                <legend>User Log In</legend>
+                <legend>Admin Log In</legend>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Email" class="form-control" ng-model="user.email" autofocus>
+                    <label for="username">username</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control" ng-model="admin.username" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" ng-model="user.password">
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" ng-model="admin.password">
                 </div>
                 <div class="form-group"><a href="/forgot"><strong>Forgot your password?</strong></a></div>
                 <button type="submit" class="btn btn-success">Log in</button>
@@ -23,7 +23,7 @@
             </p> -->
             <div class="hr-title"><span>or</span></div>
             <p class="text-center">
-                Login as <a href="/adminlogin"><strong> Admin</strong></a>
+                Login as <a href="/"><strong> User</strong></a>
             </p>
             <div class="btn-toolbar text-center">
             </div>

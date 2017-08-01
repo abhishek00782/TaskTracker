@@ -7,15 +7,29 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
                 templateUrl: 'partials/contact.html',
                 controller: 'ContactCtrl'
             })
+            .when('/adminlogin', {
+                templateUrl: 'partials/adminlogin.html',
+                controller: 'AdminCtrl',
+                resolve: { skipIfAuthenticated: skipIfAuthenticated,
+                checkWho:checkWho }
+            })
+            .when('/adminsignup', {
+                templateUrl: 'partials/adminsignup.html',
+                controller: 'AdminSignupCtrl',
+                resolve: { skipIfAuthenticated: skipIfAuthenticated ,
+                checkWho:checkWho}
+            })
             .when('/', {
                 templateUrl: 'partials/login.html',
                 controller: 'LoginCtrl',
-                resolve: { skipIfAuthenticated: skipIfAuthenticated }
+                resolve: { skipIfAuthenticated: skipIfAuthenticated ,
+                            checkWho:checkWho}
             })
             .when('/signup', {
                 templateUrl: 'partials/signup.html',
                 controller: 'SignupCtrl',
-                resolve: { skipIfAuthenticated: skipIfAuthenticated }
+                resolve: { skipIfAuthenticated: skipIfAuthenticated ,
+                checkWho:checkWho}
             })
             .when('/account', {
                 templateUrl: 'partials/profile.html',
@@ -61,10 +75,24 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
                 $location.path('/login');
             }
         }
+        function checkWho($location){
+            console.log($location.path());
+            if($location.path() == '/'){
+                $authProvider.loginUrl = '/login';
+            }else if($location.path() == '/signup'){
+                $authProvider.signupUrl = '/signup';
+            }else if($location.path() == '/adminlogin'){
+                $authProvider.loginUrl = '/adminlogin';
+            }else{
+                $authProvider.signupUrl = '/adminsignup';
+            }
+        }
     })
     .run(function($rootScope, $window) {
         if ($window.localStorage.user) {
             console.log($window.localStorage.user);
             $rootScope.currentUser = JSON.parse($window.localStorage.user);
+        }else{
+            $rootScope.currentAdmin = JSON.parse($window.localStorage.admin);
         }
     });

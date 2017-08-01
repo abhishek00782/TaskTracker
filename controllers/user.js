@@ -8,11 +8,24 @@ var qs = require('querystring');
 var User = require('../models/User');
 var fs = require('fs');
 var Task = require('../models/Task');
+var Admin = require('../models/Admin');
 
 function generateToken(user) {
     var payload = {
         iss: 'my.domain.com',
         sub: user.id,
+        iat: moment()
+            .unix(),
+        exp: moment()
+            .add(7, 'days')
+            .unix()
+    };
+    return jwt.sign(payload, process.env.TOKEN_SECRET);
+}
+function generateToken(admin) {
+    var payload = {
+        iss: 'my.domain.com',
+        sub: admin.id,
         iat: moment()
             .unix(),
         exp: moment()
@@ -74,7 +87,85 @@ exports.loginPost = function(req, res, next) {
         });
     });
 };
+//----------------------------------------------------------------
+ exports.ensureAuthenticated = function(req, res, next) {
+      if (req.isAuthenticated()) {
+          next();
+      } else {
+          res.status(401)
+              .send({ msg: 'Unauthorized' });
+      }
+  };
+/**
+ * POST /login
+ * Sign in with email and password
+ */
+exports.adminloginPost = function(req, res, next) {
+    req.assert('username', 'Username cannot be blank')
+        .notEmpty();
+    req.assert('password', 'Password cannot be blank')
+        .notEmpty();
 
+    var errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400)
+            .send(errors);
+    }
+
+    Admin.findOne({ username: req.body.username }, function(err, admin) {
+        if (!admin) {
+            return res.status(401)
+                .send({
+                    msg: 'The username ' + req.body.username + ' is not associated with any account. ' +
+                        'Double-check your email address and try again.'
+                });
+        }
+        admin.comparePassword(req.body.password, function(err, isMatch) {
+            if (!isMatch) {
+                return res.status(401)
+                    .send({ msg: 'Invalid email or password' });
+            }
+            res.send({ token: generateToken(admin), admin: admin.toJSON() });
+        });
+    });
+};
+//-----------------------------------------------------------
+    exports.adminsignupPost = function(req, res, next) {
+    req.assert('username', 'Username cannot be blank')
+        .notEmpty();
+    req.assert('email', 'Email is not valid')
+        .isEmail();
+    req.assert('email', 'Email cannot be blank')
+        .notEmpty();
+    req.assert('password', 'Password must be at least 4 characters long')
+        .len(4);
+    req.sanitize('email')
+        .normalizeEmail({ remove_dots: false });
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400)
+            .send(errors);
+    }
+
+    Admin.findOne({ email: req.body.email }, function(err, admin) {
+        if (admin) {
+            return res.status(400)
+                .send({ msg: 'The email address you have entered is already associated with another account.' });
+        }
+        admin = new Admin({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        });
+        admin.save(function(err) {
+            res.send({ token: generateToken(admin), admin: admin });
+        });
+    });
+};
+//-----------------------------------------------------------
 /**
  * POST /signup
  */
