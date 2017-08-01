@@ -25,6 +25,7 @@ dotenv.load();
 
 // Models
 var User = require('./models/User');
+var Admin = require('./models/Admin');
 
 // Controllers
 var userController = require('./controllers/user');
@@ -66,7 +67,28 @@ app.use(function(req, res, next) {
         next();
     }
 });
+//-----------------------------------------------
+    app.use(function(req, res, next) {
+    req.isAuthenticated = function() {
+        var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
+        try {
+            return jwt.verify(token, process.env.TOKEN_SECRET);
+        } catch (err) {
+            return false;
+        }
+    };
 
+    if (req.isAuthenticated()) {
+        var payload = req.isAuthenticated();
+        Admin.findById(payload.sub, function(err, admin) {
+            req.admin = admin;
+            next();
+        });
+    } else {
+        next();
+    }
+});
+//-----------------------------------------------
 app.post('/contact', contactController.contactPost);
 app.put('/account', userController.ensureAuthenticated, userController.accountPut);
 app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
@@ -78,7 +100,8 @@ app.get('/unlink/:provider', userController.ensureAuthenticated, userController.
 app.post('/savedata', userController.ensureAuthenticated, upload.single('file'), userController.picturePost);
 app.post('/task', userController.ensureAuthenticated, userController.taskGet);
 app.put('/task/update', userController.ensureAuthenticated, userController.taskUpdatePut);
-
+app.post('/adminlogin', userController.adminloginPost);
+app.post('/adminsignup', userController.adminsignupPost);
 
 app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);
