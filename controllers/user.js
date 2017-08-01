@@ -319,11 +319,55 @@ exports.accountDelete = function(req, res, next) {
  * POST /task
  */
 exports.taskGet = function(req, res, next) {
-    console.log('getTask called');
     Task.find({ members: { $elemMatch: { $eq: req.user.id } } }, function(err, task) {
         if (task) {
             return res.status(200)
                 .send({ msg: 'tasks present', task: task, user: req.user });
+        } else {
+            return res.status(200)
+                .send({ msg: 'No tasks currently assigned to you' });
+        }
+    });
+};
+
+
+/**
+ * POST /stats
+ */
+exports.statsGet = function(req, res, next) {
+    console.log(req.body);
+    var pend;
+    var work;
+    var comp;
+
+
+    Task.find({ members: { $elemMatch: { $eq: req.user.id } } }, function(err, task1) {
+        if (task1) {
+            var len = task1.length;
+            Task.find({ members: { $elemMatch: { $eq: req.user.id } }, status: 'pending' }, function(err, task2) {
+                if (task2) {
+                    pend = task2.length;
+                    Task.find({ members: { $elemMatch: { $eq: req.user.id } }, status: 'working' }, function(err, task3) {
+                        if (task3) {
+                            var work = task3.length;
+                            Task.find({ members: { $elemMatch: { $eq: req.user.id } }, status: 'completed' }, function(err, task4) {
+                                if (task4) {
+                                    var comp = task4.length;
+                                    return res.status(200)
+                                        .send({ msg: 'stats', user: req.user, stats: { all: len, pend: pend, work: work, comp: comp } });
+                                } else {
+
+                                }
+                            });
+                        } else {
+
+                        }
+                    });
+                } else {
+                    pend = 0;
+                }
+            });
+
         } else {
             return res.status(200)
                 .send({ msg: 'No tasks currently assigned to you' });

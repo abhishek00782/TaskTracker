@@ -65,6 +65,12 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
                 resolve: { loginRequired: loginRequired }
 
             })
+            .when('/stats', {
+                templateUrl: 'partials/stats.html',
+                controller: 'StatsCtrl',
+                resolve: { loginRequired: loginRequired }
+
+            })
             .otherwise({
                 templateUrl: 'partials/404.html'
             });

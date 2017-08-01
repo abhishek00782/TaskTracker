@@ -13,7 +13,8 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/account')}"><a href="/account">Profile</a></li>
-                <li ng-class="{ active: isActive('#')}"><a href="/task">Task</a></li>
+                <li ng-class="{ active: isActive('/task')}"><a href="/task">Task</a></li>
+                <li ng-class="{ active: isActive('/stats')}"><a href="/stats">Stats</a></li>
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
