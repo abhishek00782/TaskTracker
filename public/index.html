@@ -16,6 +16,7 @@
                 overflow-x: hidden;
             }
         </style>
+
     </head>
 
     <body ng-app="MyApp">
@@ -50,6 +51,16 @@
         <script src="/js/services/account.js"></script>
         <script src="/js/services/contact.js"></script>
         <script src="/js/services/task.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".dropdown").on("hide.bs.dropdown", function() {
+                    $(".btn").html('Dropdown <span class="caret"></span>');
+                });
+                $(".dropdown").on("show.bs.dropdown", function() {
+                    $(".btn").html('Dropdown <span class="caret caret-up"></span>');
+                });
+            });
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!-- <script>

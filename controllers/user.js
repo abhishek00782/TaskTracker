@@ -403,6 +403,7 @@ exports.taskCreatePut = function(req, res, next) {
         deadlineDate: Date.now() + (req.body.deadlineDate * 24 * 60 * 60 * 1000),
         priority: req.body.priority,
         status: req.body.status,
+        rating: req.body.rating,
         remarks: req.body.remarks,
         members: req.user.id,
         assignedDate: Date.now(),
