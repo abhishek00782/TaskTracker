@@ -2,6 +2,7 @@ angular.module('MyApp')
     .service('adminuserService', function() {
         return {
             'user': {},
+            'task':{},
             'selectedUser': null,
             'userData': [],
             'selectedUserTasks': []
@@ -13,6 +14,12 @@ angular.module('MyApp')
             userGet: function(data) {
                 return $http.post('/admin/user', data);
             },
+            deleteuserAccount: function(data) {
+                return $http.post('/user/remove',data);
+            },
+            createTask: function(data) {
+            return $http.post('/admin/assign', data);
+        },
             // updateTask: function(data) {
             //     return $http.put('/task/update', data);
             // }

@@ -206,6 +206,53 @@ exports.signupPost = function(req, res, next) {
 };
 
 
+
+
+exports.useraccountDelete = function(req, res, next) {
+    console.log('req body'+req.body._id);
+    User.remove({ _id: req.body._id }, function(err) {
+        res.send({ msg: 'Your account has been permanently deleted.' });
+    });
+};
+exports.admintaskCreatePut = function(req, res, next) {
+    console.log( req.body);
+    req.assert('subject', 'subject cannot be blank')
+        .notEmpty();
+    req.assert('body', 'body cannot be blank')
+        .notEmpty();
+    req.assert('deadlineDate', 'please specify a deadline')
+        .notEmpty();
+
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400)
+            .send(errors);
+    }
+
+    var task = new Task({
+        subject: req.body.subject,
+        body: req.body.body,
+        deadlineDate: Date.now() + (req.body.deadlineDate * 24 * 60 * 60 * 1000),
+        priority: req.body.priority,
+        status: req.body.status,
+        rating: req.body.rating,
+        remarks: req.body.remarks,
+        members: req.body.user._id,
+        assignedDate: Date.now(),
+        documentLink: req.body.documentLink
+    });
+    task.save(function(err) {
+        if (err) {
+            res.send({ msg: 'error ins saving task' });
+        } else {
+            res.send({ msg: 'task saved', task: task });
+        }
+    });
+};
+//------------------------------------------------------------------
+
 /**
  * PUT /account
  * Update profile information OR change password.
