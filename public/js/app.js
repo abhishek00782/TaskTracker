@@ -23,6 +23,11 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
                     checkWho: checkWho
                 }
             })
+            .when('/admin/user', {
+                templateUrl: 'partials/adminuser.html',
+                controller: 'AdminUserCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
             .when('/', {
                 templateUrl: 'partials/login.html',
                 controller: 'LoginCtrl',
@@ -75,8 +80,8 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
                 templateUrl: 'partials/404.html'
             });
 
-        $authProvider.loginUrl = '/login';
-        $authProvider.signupUrl = '/signup';
+        // $authProvider.loginUrl = '/login';
+        // $authProvider.signupUrl = '/signup';
 
         function skipIfAuthenticated($location, $auth) {
             if ($auth.isAuthenticated()) {
@@ -103,11 +108,11 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
             }
         }
     })
-    .run(function($rootScope, $window) {
-        if ($window.localStorage.user) {
-            console.log($window.localStorage.user);
-            $rootScope.currentUser = JSON.parse($window.localStorage.user);
-        } else {
-            $rootScope.currentAdmin = JSON.parse($window.localStorage.admin);
-        }
-    });
+    // .run(function($rootScope, $window) {
+    //     if ($window.localStorage.user) {
+    //         console.log($window.localStorage.user);
+    //         $rootScope.currentUser = JSON.parse($window.localStorage.user);
+    //     } else {
+    //         $rootScope.currentAdmin = JSON.parse($window.localStorage.admin);
+    //     }
+    // });
