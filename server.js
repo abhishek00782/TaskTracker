@@ -106,6 +106,14 @@ app.post('/task/create', userController.ensureAuthenticated, userController.task
 app.post('/stats', userController.ensureAuthenticated, userController.statsGet);
 app.post('/user/add', userController.ensureAuthenticated, userController.addUser);
 app.post('/admin/user', userController.ensureAuthenticated, userController.userGet);
+app.get('/tasks', userController.ensureAuthenticated, userController.adminTasksGet);
+app.post('/admin/allTasks', userController.ensureAuthenticated, userController.allTasksGet);
+app.post('/admin/completedTasks', userController.ensureAuthenticated, userController.completedTasksGet);
+app.post('/admin/pendingTasks', userController.ensureAuthenticated, userController.pendingTasksGet);
+app.post('/admin/workingTasks', userController.ensureAuthenticated, userController.workingTasksGet);
+app.post('/admin/userTaskDetail', userController.ensureAuthenticated, userController.userTaskDetailGet);
+
+
 
 app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);

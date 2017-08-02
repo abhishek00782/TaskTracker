@@ -1,13 +1,13 @@
 angular.module('MyApp')
     .service('adminuserService', function() {
         return {
-            'user':{},
+            'user': {},
             'selectedUser': null,
             'userData': [],
-            'selectedUserTasks':[]
+            'selectedUserTasks': []
         }
     });
-    angular.module('MyApp')
+angular.module('MyApp')
     .factory('usersFactory', function($http) {
         return {
             userGet: function(data) {

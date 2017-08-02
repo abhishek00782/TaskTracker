@@ -8,20 +8,21 @@
         <span class="icon-bar"></span>
       </button>
 
-            <a href="/" class="navbar-brand">Task Tracker</a>
+            <a class="navbar-brand" style="color: white">Task Tracker Admin</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li ng-class="{ active: isActive('/account')}"><a href="/account">Profile</a></li>
-                <li ng-class="{ active: isActive('/admin/user')}"><a href="/admin/user">Users</a></li>
+                <!-- <li ng-class="{ active: isActive('/account')}"><a href="/account">Profile</a></li> -->
+                <li ng-class="{ active: isActive('/admin/user')}"><a class="navbar-header" style="color: lightgrey" href="/admin/user">Users</a></li>
+                <li ng-class="{ active: isActive('/admin/tasks')}"><a class="navbar-header" style="color: lightgrey" href="/admin/tasks">Tasks</a></li>
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="navbar-avatar dropdown-toggle">
-                        <img ng-src="{{currentUser.picture || currentUser.gravatar}}"> {{currentAdmin.username || currentAdmin.email || currentAdmin.id}} <i class="caret"></i>
+                        <img ng-src="/images/profile-default-male.png" || "{{currentUser.picture}}"> {{currentAdmin.username || currentAdmin.email || currentAdmin.id}} <i class="caret"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/account">My Account</a></li>
+                        <!-- <li><a href="/account">My Account</a></li> -->
                         <li class="divider"></li>
                         <li><a href="#" ng-click="logout()" }>Logout</a></li>
                     </ul>

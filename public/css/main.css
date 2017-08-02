@@ -90,12 +90,13 @@ cards*/
 
 .special-card {
     background-color: #3F729B;
+    margin: 5px;
 }
 
 .card {
     display: block;
-    height: 150px;
-    width: 350px;
+    height: 190px;
+    width: 400px;
     margin-bottom: 20px;
     line-height: 1.42857143;
     background-color: #fff;
