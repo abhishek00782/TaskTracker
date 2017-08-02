@@ -28,6 +28,36 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
                 controller: 'AdminUserCtrl',
                 resolve: { loginRequired: loginRequired }
             })
+            .when('/admin/tasks', {
+                templateUrl: 'partials/adminTask.html',
+                controller: 'AdminTaskCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
+            .when('/admin/completedTasks', {
+                templateUrl: 'partials/completedTasks.html',
+                controller: 'completedTaskCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
+            .when('/admin/userTaskDetail', {
+                templateUrl: 'partials/userTaskDetail.html',
+                controller: 'userTaskDetailCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
+            .when('/admin/workingTasks', {
+                templateUrl: 'partials/workingTasks.html',
+                controller: 'workingTaskCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
+            .when('/admin/pendingTasks', {
+                templateUrl: 'partials/pendingTasks.html',
+                controller: 'pendingTaskCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
+            .when('/admin/allTasks', {
+                templateUrl: 'partials/allTasks.html',
+                controller: 'allTaskCtrl',
+                resolve: { loginRequired: loginRequired }
+            })
             .when('/', {
                 templateUrl: 'partials/login.html',
                 controller: 'LoginCtrl',
@@ -96,7 +126,6 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
         }
 
         function checkWho($location) {
-            console.log($location.path());
             if ($location.path() == '/') {
                 $authProvider.loginUrl = '/login';
             } else if ($location.path() == '/signup') {
@@ -108,11 +137,11 @@ app.config(function($routeProvider, $locationProvider, $authProvider) {
             }
         }
     })
-    // .run(function($rootScope, $window) {
-    //     if ($window.localStorage.user) {
-    //         console.log($window.localStorage.user);
-    //         $rootScope.currentUser = JSON.parse($window.localStorage.user);
-    //     } else {
-    //         $rootScope.currentAdmin = JSON.parse($window.localStorage.admin);
-    //     }
-    // });
+    .run(function($rootScope, $window) {
+        if ($window.localStorage.user) {
+            console.log($window.localStorage.user);
+            $rootScope.currentUser = JSON.parse($window.localStorage.user);
+        } else if ($window.localStorage.admin) {
+            $rootScope.currentAdmin = JSON.parse($window.localStorage.admin);
+        }
+    });

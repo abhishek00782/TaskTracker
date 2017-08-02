@@ -28,6 +28,25 @@ app.factory('taskFactory', function($http) {
         },
         getStats: function(data) {
             return $http.post('/stats', data)
+        },
+        getAdminTasks: function() {
+            return $http.get('/tasks')
+        },
+        getAllTasks: function() {
+            return $http.post('/admin/allTasks')
+        },
+        getCompletedTasks: function() {
+            return $http.post('/admin/completedTasks');
+        },
+        getPendingTasks: function() {
+            return $http.post('/admin/pendingTasks');
+        },
+        getWorkingTasks: function() {
+            return $http.post('/admin/workingTasks');
+        },
+        getUserTaskDetail: function(data) {
+            return $http.post('/admin/userTaskDetail', data);
         }
+
     };
 });

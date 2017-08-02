@@ -329,6 +329,98 @@ exports.taskGet = function(req, res, next) {
         }
     });
 };
+
+
+
+
+/**
+ * GET /tasks/alltasks
+ */
+exports.allTasksGet = function(req, res, next) {
+    Task.find({}, function(err, task) {
+        if (task) {
+            return res.status(200)
+                .send({ msg: 'all tasks returned', task: task });
+        } else {
+            return res.status(200)
+                .send({ msg: 'No tasks currently assigned to you' });
+        }
+    });
+};
+
+
+
+/**
+ * GET /admin/completedTask
+ */
+exports.completedTasksGet = function(req, res, next) {
+    Task.find({ status: 'completed' }, function(err, task) {
+        if (task) {
+
+            return res.status(200)
+                .send({ msg: 'completed tasks', task: task });
+        } else {
+
+        }
+    });
+};
+
+
+
+
+/**
+ * GET /admin/userTaskDetail
+ */
+exports.userTaskDetailGet = function(req, res, next) {
+    console.log("body ");
+    console.log(req.body._id);
+    Task.find({ members: { $elemMatch: { $eq: req.body._id } } }, function(err, task) {
+        console.log('found', task);
+        if (task) {
+
+            return res.status(200)
+                .send({ msg: 'completed tasks', task: task });
+        } else {
+
+        }
+    });
+};
+
+
+
+/**
+ * GET /admin/workingTask
+ */
+exports.workingTasksGet = function(req, res, next) {
+    Task.find({ status: 'working' }, function(err, task) {
+        if (task) {
+
+            return res.status(200)
+                .send({ msg: 'working tasks', task: task });
+        } else {
+
+        }
+    });
+};
+
+
+
+/**
+ * GET /admin/pendingTask
+ */
+exports.pendingTasksGet = function(req, res, next) {
+    Task.find({ status: 'pending' }, function(err, task) {
+        if (task) {
+
+            return res.status(200)
+                .send({ msg: 'pending tasks', task: task });
+        } else {
+
+        }
+    });
+};
+
+
 //-----------------------------------------------
 exports.addUser = function(req, res, next) {
     req.assert('name', 'Name cannot be blank')
@@ -365,12 +457,12 @@ exports.addUser = function(req, res, next) {
     });
 };
 
-exports.userGet = function(req,res,next){
-    User.find({},function(err,users){
+exports.userGet = function(req, res, next) {
+    User.find({}, function(err, users) {
         return res.status(200)
-            .send({users:users})
+            .send({ users: users })
     })
- }
+}
 
 /**
  * POST /stats
@@ -415,6 +507,55 @@ exports.statsGet = function(req, res, next) {
         }
     });
 };
+
+
+
+/**
+ * GET /adminTasks
+ */
+exports.adminTasksGet = function(req, res, next) {
+    console.log(req.body);
+    var pend;
+    var work;
+    var comp;
+
+
+    Task.find({}, function(err, task1) {
+        if (task1) {
+            var len = task1.length;
+            Task.find({ status: 'pending' }, function(err, task2) {
+                if (task2) {
+                    pend = task2.length;
+                    Task.find({ status: 'working' }, function(err, task3) {
+                        if (task3) {
+                            var work = task3.length;
+                            Task.find({ status: 'completed' }, function(err, task4) {
+                                if (task4) {
+                                    var comp = task4.length;
+                                    return res.status(200)
+                                        .send({ msg: 'stats', user: req.user, stats: { all: len, pend: pend, work: work, comp: comp } });
+                                } else {
+
+                                }
+                            });
+                        } else {
+
+                        }
+                    });
+                } else {
+                    pend = 0;
+                }
+            });
+
+        } else {
+            return res.status(200)
+                .send({ msg: 'No tasks currently assigned to you' });
+        }
+    });
+};
+
+
+
 
 
 

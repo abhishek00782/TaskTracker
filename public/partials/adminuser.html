@@ -1,14 +1,14 @@
 <div ng-include src="'partials/adminheader.html'"></div>
-<div class=Container>
-            <div class="Box2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="task">
-                                <div class="col-md-12">
-                                    <!-- <h1 class="content-title" style="color:black;text-align:centre">Users</h1> -->
-                                 <form class="form-inline well well-sm">
-                                    <span class=""></span >
+<div class="Container xyz">
+    <div class="Box2 panel">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="task">
+                        <div class="col-md-12">
+                            <!-- <h1 class="content-title" style="color:black;text-align:centre">Users</h1> -->
+                            <form class="form-inline">
+                                <span class=""></span >
                                     <div class="form-group" >
 				                        <input type="search"
 							            
@@ -18,7 +18,7 @@
 									    />
                                     </div >
                                     <button class="btn btn-primary pull-right"
-						             ng-click="showCreateModal()" >Create
+						             ng-click="showCreateModal()" >Add User
 						</button >
                             </form >
                         <div class="row" >
@@ -56,7 +56,7 @@
 					<td >{{ user.name }}</td >
 					<td >{{ user.email }}</td >
                     <!-- <td >{{}}</td > -->
-                    <td ><a href="/admin/user/task"><button class="btn btn-md-2 btn-warning" templateUrl="/admin/user/task" >Details</button></a></td >
+                    <td ><a href="/admin/userTaskDetail"><button class="btn btn-md-2 btn-warning" templateUrl="/admin/userTaskDetail" >Details</button></a></td >
                         
 				</tr >
 				 <tr ng-show="filteredUser.length == 0">
