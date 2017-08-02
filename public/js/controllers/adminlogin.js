@@ -5,7 +5,7 @@ app.controller('AdminCtrl', function($scope, $rootScope, $location, $window, $au
             .then(function(response) {
                 $rootScope.currentAdmin = response.data.admin;
                 $window.localStorage.admin = JSON.stringify(response.data.admin);
-                $location.path('/adminlogin');
+                $location.path('/admin/user');
             })
             .catch(function(response) {
                 $scope.messages = {

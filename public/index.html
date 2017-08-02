@@ -20,7 +20,7 @@
     </head>
 
     <body ng-app="MyApp">
-        <div ng-include src="'partials/header.html'"></div>
+        
         <div ng-view></div>
         <div ng-include src="'partials/footer.html'"></div>
 
@@ -48,6 +48,8 @@
         <script src="/js/controllers/signup.js"></script>
         <script src="/js/controllers/task.js"></script>
         <script src="/js/controllers/stats.js"></script>
+        <script src="/js/controllers/adminuser.js"></script>
+        <script src="/js/controllers/adminheader.js"></script>
         <script src="/js/services/account.js"></script>
         <script src="/js/services/contact.js"></script>
         <script src="/js/services/task.js"></script>
@@ -61,7 +63,8 @@
                 });
             });
         </script>
-
+        <script src="/js/services/adminuserpage.js"></script>
+         <script src="/js/services/user.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!-- <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

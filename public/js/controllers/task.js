@@ -11,7 +11,7 @@ app.controller('TaskCtrl', function($scope, $location, $modal, taskService, task
         });
     $scope.task = taskService;
     $scope.search = '';
-    $location.path('/task');
+    //$location.path('/task');
     $scope.sensitiveSearch = function(tas) {
         if ($scope.search) {
             return tas.subject.indexOf($scope.search) == 0 ||
