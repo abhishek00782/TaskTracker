@@ -1,8 +1,9 @@
 <div ng-include src="'partials/adminheader.html'"></div>
 <div class="Container xyz">
-    <div class="Box2 panel">
+    <div class="Box1 panel-body">
         <div class="row">
             <div class="col-md-12">
+				<div class="row">
                 <div class="tab-content">
                     <div class="tab-pane active" id="task">
                         <div class="col-md-12">
@@ -18,7 +19,7 @@
 									    />
                                     </div >
                                     <button class="btn btn-primary pull-right"
-						             ng-click="showCreateModal()" >Add User
+						             ng-click="showadduserModal()" >Add User
 						</button >
                             </form >
                         <div class="row" >
@@ -44,7 +45,7 @@
 								<span ng-click="order = '-status'"
 								      class="glyphicon glyphicon-menu-down" ></span >
                                 </th > -->
-                                <th> Details </th>              
+                                <th> Action </th>              
 				                </tr >
 
 				<tr ng-repeat="user in filteredUser=(users.userData | filter:sensitiveSearch | orderBy:order)"
@@ -56,7 +57,14 @@
 					<td >{{ user.name }}</td >
 					<td >{{ user.email }}</td >
                     <!-- <td >{{}}</td > -->
-                    <td ><a href="/admin/userTaskDetail"><button class="btn btn-md-2 btn-warning" templateUrl="/admin/userTaskDetail" >Details</button></a></td >
+                    <td ><div class="dropdown">
+  <button class="dropbtn">Action</button>
+  <div class="dropdown-content" >
+    <a href="#" ng-click="showAssignModal()">Assign Task</a>
+    <a href="#" ng-click=" deleteuserAccount()">Remove User</a>
+     <a href="/admin/userTaskDetail">Details</a> 
+  </div>
+</div></td >
                         
 				</tr >
 				 <tr ng-show="filteredUser.length == 0">

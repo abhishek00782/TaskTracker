@@ -112,7 +112,8 @@ app.post('/admin/completedTasks', userController.ensureAuthenticated, userContro
 app.post('/admin/pendingTasks', userController.ensureAuthenticated, userController.pendingTasksGet);
 app.post('/admin/workingTasks', userController.ensureAuthenticated, userController.workingTasksGet);
 app.post('/admin/userTaskDetail', userController.ensureAuthenticated, userController.userTaskDetailGet);
-
+app.post('/user/remove', userController.ensureAuthenticated, userController.useraccountDelete);
+app.post('/admin/assign', userController.ensureAuthenticated, userController.admintaskCreatePut);
 
 
 app.get('*', function(req, res) {
