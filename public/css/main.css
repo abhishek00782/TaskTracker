@@ -473,6 +473,15 @@ textarea {
 .modal-backdrop.am-fade.ng-enter.ng-enter-active {
     opacity: .5;
 }
+.fixed {
+    position: absolute;
+    margin-left:20%;
+    display: block;
+    /* vertical-align: middle; */
+    /* top: 20%; */
+    margin-right: 20%;
+    /* bottom: 20%; */
+}
 
 .modal-backdrop.am-fade.ng-leave {
     opacity: .5;
