@@ -209,13 +209,13 @@ exports.signupPost = function(req, res, next) {
 
 
 exports.useraccountDelete = function(req, res, next) {
-    console.log('req body'+req.body._id);
+    console.log('req body' + req.body._id);
     User.remove({ _id: req.body._id }, function(err) {
         res.send({ msg: 'Your account has been permanently deleted.' });
     });
 };
 exports.admintaskCreatePut = function(req, res, next) {
-    console.log( req.body);
+    console.log(req.body);
     req.assert('subject', 'subject cannot be blank')
         .notEmpty();
     req.assert('body', 'body cannot be blank')
@@ -565,41 +565,48 @@ exports.adminTasksGet = function(req, res, next) {
     var pend;
     var work;
     var comp;
+    var memArr = [];
+    User.find({}, function(err, users) {
 
 
-    Task.find({}, function(err, task1) {
-        if (task1) {
-            var len = task1.length;
-            Task.find({ status: 'pending' }, function(err, task2) {
-                if (task2) {
-                    pend = task2.length;
-                    Task.find({ status: 'working' }, function(err, task3) {
-                        if (task3) {
-                            var work = task3.length;
-                            Task.find({ status: 'completed' }, function(err, task4) {
-                                if (task4) {
-                                    var comp = task4.length;
-                                    return res.status(200)
-                                        .send({ msg: 'stats', user: req.user, stats: { all: len, pend: pend, work: work, comp: comp } });
-                                } else {
 
-                                }
-                            });
-                        } else {
+        Task.find({}, function(err, task1) {
+            if (task1) {
+                var len = task1.length;
+                Task.find({ status: 'pending' }, function(err, task2) {
+                    if (task2) {
+                        pend = task2.length;
+                        Task.find({ status: 'working' }, function(err, task3) {
+                            if (task3) {
+                                var work = task3.length;
+                                Task.find({ status: 'completed' }, function(err, task4) {
+                                    if (task4) {
+                                        var comp = task4.length;
+                                        return res.status(200)
+                                            .send({ msg: 'stats', user: req.user, stats: { all: len, pend: pend, work: work, comp: comp, users: users } });
+                                    } else {
+                                        comp = 0
+                                    }
+                                });
+                            } else {
+                                work = 0;
+                            }
+                        });
+                    } else {
+                        pend = 0;
+                    }
+                });
 
-                        }
-                    });
-                } else {
-                    pend = 0;
-                }
-            });
-
-        } else {
-            return res.status(200)
-                .send({ msg: 'No tasks currently assigned to you' });
-        }
+            } else {
+                return res.status(200)
+                    .send({ msg: 'No tasks currently assigned to you' });
+            }
+        });
     });
+
+
 };
+
 
 
 
@@ -646,6 +653,53 @@ exports.taskCreatePut = function(req, res, next) {
         }
     });
 };
+
+
+/**
+ * POST /task/createAdminTask
+ */
+exports.adminTaskCreatePost = function(req, res, next) {
+    console.log('req data', req.body);
+    req.assert('subject', 'subject cannot be blank')
+        .notEmpty();
+    req.assert('body', 'body cannot be blank')
+        .notEmpty();
+    req.assert('deadlineDate', 'please specify a deadline')
+        .notEmpty();
+    req.assert('priority', 'please specify priority')
+        .notEmpty();
+    req.assert('members', 'please assign atleast one user')
+        .notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        console.log(errors);
+        return res.status(400)
+            .send(errors);
+    }
+
+    var task = new Task({
+        subject: req.body.subject,
+        body: req.body.body,
+        deadlineDate: Date.now() + (req.body.deadlineDate * 24 * 60 * 60 * 1000),
+        priority: req.body.priority,
+        status: req.body.status,
+        rating: req.body.rating,
+        remarks: req.body.remarks,
+        members: req.body.members,
+        assignedDate: Date.now(),
+        documentLink: req.body.documentLink
+    });
+    task.save(function(err) {
+        if (err) {
+            res.send({ msg: 'error ins saving task' });
+        } else {
+            res.send({ msg: 'task saved', task: task });
+        }
+    });
+};
+
 
 
 /**

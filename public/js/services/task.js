@@ -46,7 +46,10 @@ app.factory('taskFactory', function($http) {
         },
         getUserTaskDetail: function(data) {
             return $http.post('/admin/userTaskDetail', data);
-        }
+        },
+        createAdminTask: function(data) {
+            return $http.post('/task/createAdminTask', data);
+        },
 
     };
 });
