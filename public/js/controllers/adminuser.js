@@ -61,10 +61,11 @@ angular.module('MyApp')
                                 console.log('response', response);
                                 console.log(response.data);
                                 adminuserService.userData = response.data.users;
+                                $scope.messages = {
+                                    success: [response.data.msg]
+                                };
                             });
-                        $scope.messages = {
-                            success: [response.data.msg]
-                        };
+
                     })
                     .catch(function(response) {
                         $scope.messages = {
@@ -111,47 +112,47 @@ angular.module('MyApp')
                 });
         };
 
-           $scope.deleteuserAccount = function() {
+        $scope.deleteuserAccount = function() {
             console.log($scope.users.selectedUser)
-        usersFactory.deleteuserAccount($scope.users.selectedUser)
-            .then(function() {
-                delete $window.localStorage.user;
-                // $location.path('/admin/user');
-                 usersFactory.userGet()
-            .then(function(response) {
-                console.log(response.data);
-                adminuserService.userData = response.data.users;
-                $scope.messages = {
-                    success: [response.data.msg]
-                };
-            });
+            usersFactory.deleteuserAccount($scope.users.selectedUser)
+                .then(function() {
+                    delete $window.localStorage.user;
+                    // $location.path('/admin/user');
+                    usersFactory.userGet()
+                        .then(function(response) {
+                            console.log(response.data);
+                            adminuserService.userData = response.data.users;
+                            $scope.messages = {
+                                success: [response.data.msg]
+                            };
+                        });
+                })
+                .catch(function(response) {
+                    $scope.messages = {
+                        error: [response.data]
+                    };
+                });
+        };
+
+
+
+
+        $scope.showAssignModal = function() {
+            $scope.users.task = { 'user': $scope.users.selectedUser };
+            $scope.createModal = $modal({
+                scope: $scope,
+                templateUrl: 'partials/modal.assigntask.tpl.html',
+                show: true
             })
-            .catch(function(response) {
-                $scope.messages = {
-                    error: [response.data]
-                };
-            });
-    };
+        };
+
+        $scope.createTask = function() {
+            console.log($scope.users.task);
+            usersFactory.createTask($scope.users.task)
+                .then(function() {
+                    $scope.createModal.hide();
+                })
 
 
-
-
-    $scope.showAssignModal = function() {
-        $scope.users.task = {'user':$scope.users.selectedUser};
-        $scope.createModal = $modal({
-            scope: $scope,
-            templateUrl: 'partials/modal.assigntask.tpl.html',
-            show: true
-        })
-    };
-
-    $scope.createTask = function() {
-        console.log($scope.users.task);
-        usersFactory.createTask($scope.users.task)
-            .then(function() {
-                $scope.createModal.hide();
-            })
-
-
-    };
+        };
     });

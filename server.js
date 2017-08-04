@@ -114,6 +114,7 @@ app.post('/admin/workingTasks', userController.ensureAuthenticated, userControll
 app.post('/admin/userTaskDetail', userController.ensureAuthenticated, userController.userTaskDetailGet);
 app.post('/user/remove', userController.ensureAuthenticated, userController.useraccountDelete);
 app.post('/admin/assign', userController.ensureAuthenticated, userController.admintaskCreatePut);
+app.post('/task/createAdminTask', userController.ensureAuthenticated, userController.adminTaskCreatePost);
 
 
 app.get('*', function(req, res) {
